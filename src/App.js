@@ -13,7 +13,7 @@ import './components/styles/card.css'
 class App extends Component{
 
   state = {
-    dados:undefined,
+    dados:undefined
   }
 
   constructor(props){
@@ -63,9 +63,32 @@ class App extends Component{
         <div>
           <InputText 
             onChange={v => this.handleChange('fn', v)}
-            value={this.state.fn}  
+            value={this.state.fn}
+            ph={'Firstname'}  
+          />
+          <InputText 
+            onChange={v => this.handleChange('ln', v)}
+            value={this.state.ln}
+            ph={'Lastname'}  
+          />
+          <InputText 
+            onChange={v => this.handleChange('email', v)}
+            value={this.state.email}
+            ph={'Email'}  
+          />
+          <InputText 
+            onChange={v => this.handleChange('username', v)}
+            value={this.state.username}
+            ph={'username'}  
+          />
+          <InputText 
+            onChange={v => this.handleChange('password', v)}
+            value={this.state.password}
+            ph={'password'}  
           />
         </div>
+
+        <button onClick={() => console.log(this.state)}>log</button>
       </>
     )
   }

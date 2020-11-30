@@ -3,7 +3,8 @@ import autobind from 'class-autobind'
 
 export default class InputText extends Component{
   state = {
-    value: this.props.value
+    value: this.props.value,
+    ph: this.props.ph
   }
 
   constructor(props){
@@ -17,8 +18,8 @@ export default class InputText extends Component{
     }
   }
 
-  onChange({target:{value}}){
-    this.setState({value})
+  onChange({target:{value}}){    // {target:{value}} => valor digitado
+    this.setState({value}) //alfredo
     this.props.onChange(value)
   }
 
@@ -29,7 +30,7 @@ export default class InputText extends Component{
           type="text"
           onChange={this.onChange}
           value={this.state.value}
-          placeholder="Firstname"
+          placeholder={this.props.ph}
         >
         </input>
       </>
