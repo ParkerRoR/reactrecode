@@ -4,10 +4,12 @@ class Card extends Component{
   render(){
     return(
       <>
-        <ul>
-          <li>{this.props.fullName}</li>
-          <li>{this.props.email}</li>
-        </ul>
+        <div className="mainCard">
+          <ul className="ulCard mx-auto">
+            <li className="mb-4">{this.props.fullName}</li>
+            <li>{this.props.email}</li>
+          </ul>
+        </div>
       </>
     )
   }

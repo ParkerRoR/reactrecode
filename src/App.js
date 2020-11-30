@@ -5,13 +5,15 @@ import Skeleton from 'react-loading-skeleton'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Card from './components/Card/Card'
+import InputText from './components/InputText/InputText'
 
 import './estilo.css'
+import './components/styles/card.css'
 
 class App extends Component{
 
   state = {
-    dados:undefined
+    dados:undefined,
   }
 
   constructor(props){
@@ -33,13 +35,18 @@ class App extends Component{
       })
   }
 
+
+  handleChange = (name, value) => {
+    this.setState({[name]:value})
+  }
+
   render(){
     return(
       <>
         <div className="row p-0 m-0">
           {this.state.dados ?
               this.state.dados.map(dado => 
-                <div className="col-4 p-0 m-0">
+                <div className="col-12 col-md-4 p-0 m-0 text-center">
                   <Card 
                     fullName={`${dado.firstname} ${dado.lastname}`}
                     email={dado.email} 
@@ -51,6 +58,13 @@ class App extends Component{
               <Skeleton></Skeleton>
             </div>
           }
+        </div>
+
+        <div>
+          <InputText 
+            onChange={v => this.handleChange('fn', v)}
+            value={this.state.fn}  
+          />
         </div>
       </>
     )
