@@ -4,9 +4,11 @@ class Card extends Component{
   render(){
     return(
       <>
-    <h2>{this.props.nome}</h2>
-    outra coisa
-    </>
+        <ul>
+          <li>{this.props.fullName}</li>
+          <li>{this.props.email}</li>
+        </ul>
+      </>
     )
   }
 }
