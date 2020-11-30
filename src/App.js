@@ -39,17 +39,17 @@ class App extends Component{
         <div className="row p-0 m-0">
           {this.state.dados ?
               this.state.dados.map(dado => 
-                <>
-                  <div className="col-4 p-0 m-0">
-                    <Card 
-                      fullName={`${dado.firstname} ${dado.lastname}`}
-                      email={dado.email} 
-                    />
-                  </div>
-                </>
+                <div className="col-4 p-0 m-0">
+                  <Card 
+                    fullName={`${dado.firstname} ${dado.lastname}`}
+                    email={dado.email} 
+                  />
+                </div>
               )
             :
+            <div style={{width:'500px'}}>
               <Skeleton></Skeleton>
+            </div>
           }
         </div>
       </>
