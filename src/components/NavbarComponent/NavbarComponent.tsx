@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import autobind from 'class-autobind'
 
 
-import ModalComponent from 'components/Cadastrar/ModalComponent/ModalComponent'
+import CreateModal from 'components/Cadastrar/ModalComponent/ModalComponent'
+import DeleteModal from 'components/Deletar/ModalComponent/ModalComponent'
 class NavbarComponent extends Component {
   public state = {  
-    toggleModal : false
+    deleteModal : false,
+    createModal : false
   }
 
   constructor(props){
@@ -17,6 +19,10 @@ class NavbarComponent extends Component {
     this.setState({
       [state]: !this.state[state]
     })
+  }
+
+  private handleChange(name,value){
+    this.setState({[name]:value})
   }
 
 
@@ -35,7 +41,7 @@ class NavbarComponent extends Component {
 
           <span 
             className="px-3"
-            onClick={() => this.toggleModal('toggleModal')}
+            onClick={() => this.toggleModal('createModal')}
             style={{cursor:'pointer'}}>
               Criar
           </span>
@@ -44,15 +50,17 @@ class NavbarComponent extends Component {
             Editar
           </span>
 
-          <span className="px-3">
-            Deletar
+          <span 
+            className="px-3"
+            onClick={() => this.toggleModal('deleteModal')}
+            style={{cursor:'pointer'}}>
+              Deletar
           </span>
 
         </div>
       </div>
-
-      <ModalComponent toggleModal={this.state.toggleModal}/>
-
+      <CreateModal toggleModal={this.state.createModal} handle={v => this.handleChange('createModal', v)}/>
+      <DeleteModal toggleModal={this.state.deleteModal} handle={v => this.handleChange('deleteModal', v)}/>
      </> 
     )
   }

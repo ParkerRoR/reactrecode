@@ -22,6 +22,16 @@ class DataService{
     }
   }
 
+  public async deleteUser(payload){
+    try{
+      console.log(payload)
+      const { data } = await axios.delete(burl + 'users/' + payload + '/')
+      return data
+    }catch(err){
+      throw err
+    }
+  }
+
 }
 
 export const dataService = new DataService()

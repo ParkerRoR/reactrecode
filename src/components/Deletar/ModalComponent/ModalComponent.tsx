@@ -13,25 +13,13 @@ export interface ModalComponentProps{
   handle : (params) => void
 }
 
-const dados = [
-  {ph:'Primeiro nome', stateValue:'fn',type:'text'},
-  {ph:'Último nome', stateValue:'ln',type:'text'},
-  {ph:'Email', stateValue:'email',type:'email'},
-  {ph:'Usuário', stateValue:'username',type:'text'},
-  {ph:'Senha', stateValue:'password',type:'password'},
-]
 
-const states = ['fn','ln','email','username','password']
+
 
 class ModalComponent extends Component<ModalComponentProps> {
   public state = {  
-    createUserModal : this.props.toggleModal,
-    fn: undefined,
-    ln: undefined,
-    email: undefined,
+    deleteUserModal : this.props.toggleModal,
     username: undefined,
-    password: undefined,
-
   }
 
   constructor(props){
@@ -40,8 +28,8 @@ class ModalComponent extends Component<ModalComponentProps> {
   }
 
   componentWillReceiveProps(p){
-    if(this.state.createUserModal !== p.toggleModal){
-      this.setState({createUserModal: p.toggleModal})
+    if(this.state.deleteUserModal !== p.toggleModal){
+      this.setState({deleteUserModal: p.toggleModal})
     }
   }
 
@@ -50,53 +38,35 @@ class ModalComponent extends Component<ModalComponentProps> {
       [state]: !this.state[state]
     })
     this.props.handle(!this.state[state])
-
   }
 
   private handleChange(name, value){
     this.setState({[name]:value})
   }
 
-  private checkFields(){
-    let check
-    for(let i = 0; i<states.length;i++){
-      if(!this.state[states[i]]){
-        check = false
-        break
-      }else{
-        check = true
-      }
-    }
+  private deleteUser(state){
+    const payload =  state.username
 
-    return check
-  }
+    const p = ds.deleteUser(payload)
 
-  private createUser(state){
-
-    const payload = {
-      firstname : state.fn,
-      lastname : state.ln,
-      username : state.username,
-      password : state.password,
-      email : state.email
-    }
-
-    const p = ds.createUser(payload)
-    p.then(r => {
-      console.log(r)
+    p.then(res => {
+      console.log(res)
     })
   }
+
+
+
 
   render() {
     return (
       <>
           <Modal
           className="modal-dialog-centered"
-          isOpen={this.state.createUserModal}
-          toggle={() => this.toggleModal("createUserModal")}
+          isOpen={this.state.deleteUserModal}
+          toggle={() => this.toggleModal("deleteUserModal")}
         >
           <div className="modal-header">
-            <h5 className="modal-title" id="createUserModalLabel">
+            <h5 className="modal-title" id="deleteUserModalLabel">
               Crie seu usuário
             </h5>
             <button
@@ -104,24 +74,21 @@ class ModalComponent extends Component<ModalComponentProps> {
               className="close"
               data-dismiss="modal"
               type="button"
-              onClick={() => this.toggleModal("createUserModal")}
+              onClick={() => this.toggleModal("deleteUserModal")}
             >
               <span aria-hidden={true}>×</span>
             </button>
           </div>
 
           <div className="modal-body">
-            {dados.map(d => 
-              <div className="col-10 p-0 my-2 mx-auto">
-                <InputText
-                  ph={d.ph}
-                  onChange={v => this.handleChange(d.stateValue, v)}
-                  value={this.state[d.stateValue]}
-                  type={d.type}
-                />
-              </div> 
-            )}
-           
+            <div className="col-10 p-0 my-2 mx-auto">
+              <InputText
+                ph={'Usuário a ser deletado'}
+                onChange={v => this.handleChange('username', v)}
+                value={this.state.username}
+                type={'text'}
+              />
+            </div> 
           </div>
 
           <div className="modal-footer">
@@ -129,15 +96,15 @@ class ModalComponent extends Component<ModalComponentProps> {
               color="secondary"
               data-dismiss="modal"
               type="button"
-              onClick={() => this.toggleModal("createUserModal")}
+              onClick={() => this.toggleModal("deleteUserModal")}
             >
               Close
             </Button>
-            {this.checkFields() ? 
+            {this.state.username ? 
                 <Button
                   color="primary"
                   type="button"
-                  onClick={() => this.createUser(this.state)}>
+                  onClick={() => this.deleteUser(this.state)}>
                   Criar usuário
                 </Button>
               :
